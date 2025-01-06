@@ -6,7 +6,7 @@ const Cart = () => {
   return (
       <>
           <Header />
-          <div className="px-5" style={{ paddingTop: '100px' }}>
+          <div className="px-5" style={{ paddingTop: '100px' , minHeight: '70vh'}}>
               <>
                   <h1 className='text-5xl font-bold text-blue-600'>Cart Summary</h1>
                   <div className='grid grid-cols-3 gap-4 mt-5'>
@@ -41,7 +41,7 @@ const Cart = () => {
                           </table>
                           <div className="float-right">
                               <button className="bg-red-600 rounded p-2 text-white">Empty Cart</button>
-                              <Link to={'/'} className='bg-blue-600 ms-3 p-2 rounded text-white'>Shop More..</Link>
+                              <Link to={'/'} className='bg-blue-600 ms-3 p-2 rounded text-white'>Shop More</Link>
                           </div>
                       </div>
                       <div className="col-span-1">
