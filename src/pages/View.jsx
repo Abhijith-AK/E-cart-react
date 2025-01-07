@@ -1,26 +1,51 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
+import { useParams } from 'react-router-dom'
 
 const View = () => {
+    const { id } = useParams()
+    console.log(id);
+
+    const [product, setProduct] = useState([])
+
+    useEffect(() => {
+        if (sessionStorage.getItem("allProducts")) {
+            const allProducts = JSON.parse(sessionStorage.getItem("allProducts"))
+            console.log(allProducts)
+            setProduct(allProducts.find(product => product.id == id));
+        }
+    }, [])
+
     return (
         <>
             <Header />
             <div className="flex flex-col mx-5">
                 <div className="grid grid-cols-2 items-center h-screen">
-                    <img src="https://media.istockphoto.com/id/1206806317/vector/shopping-cart-icon-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1RRQJs5NDhcB67necQn1WCpJX2YMfWZ4rYi1DFKlkNA=" width={'450px'} height={'200px'} alt="" />
-                    <div className="">
-                        <h3 className='font-bold'>PID : id</h3>
-                        <h1 className='text-5xl font-bold'>Product Name</h1>
-                        <h4 className="font-bold text-red-600 text-2xl">$ 250</h4>
-                        <h4>Brand : brand</h4>
-                        <h4>Category : category</h4>
+                    <img src={product?.thumbnail} width={'450px'} height={'200px'} alt="" />
+                    <div>
+                        <h3 className='font-bold'>PID : {product?.id}</h3>
+                        <h1 className='text-5xl font-bold'>{product?.title}</h1>
+                        <h4 className="font-bold text-red-600 text-2xl my-2">{product?.price}</h4>
+                        <h4>Brand : {product?.brand}</h4>
+                        <h4>Category : {product?.category}</h4>
                         <p>
-                            <span className="font-bold">Description</span> : Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis rem iusto veritatis vel? Quos rerum rem dolor doloremque amet aut, accusantium repudiandae, perspiciatis ullam in nulla delectus sed ducimus officia?
+                            <span className="font-bold">Description</span> : {product?.description}
                             <div className="flex justify-between mt-5">
                                 <button className="bg-blue-600 text-white p-2">Add to Wishlist</button>
                                 <button className="bg-green-600 text-white p-2">Add to Cart</button>
                             </div>
                         </p>
+                        <h3 className='font-bold mt-5 text-xl mb-2'>Client Reviews</h3>
+                        {
+                            product?.reviews?.map(item => (
+                                <div key={item?.date} className="shadow border rounded p-2 mb-2">
+                                    <h5>
+                                        <span className='font-bold'>{item?.reviewerName}</span> : <span>{ item?.comment }</span>
+                                    </h5>
+                                    <p>Rating: { item?.rating } <i className="fa-solid fa-star text-yellow-400"></i></p>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
