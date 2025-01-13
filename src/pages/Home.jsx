@@ -21,6 +21,18 @@ const Home = () => {
         dispatch(fetchProducts())
     }, [])
 
+    const navigateToNextPage = () => {
+        if (currentPage != totalPages) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+
+    const navigateToPrevPage = () => {
+        if (currentPage != 1) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+
     return (
         <>
             <Header insideHome={true} />
@@ -35,7 +47,7 @@ const Home = () => {
                             <div className="grid grid-cols-4 gap-4">
                                 {
                                     allProducts?.length > 0 ?
-                                        allProducts?.map(product => (
+                                        visibleAllProducts?.map(product => (
                                             <div key={product?.id} className="rounded border p-2 shadow">
                                                 <img src={product?.thumbnail} width={'100%'} height={'200px'} alt="" />
                                                 <div className="text-center">
@@ -49,6 +61,11 @@ const Home = () => {
                                             Product Not Found
                                         </div>
                                 }
+                            </div>
+                            <div className="text-2xl text-center font-bold mt-20">
+                                <span onClick={navigateToPrevPage} className="cursor-pointer"><i className="fa-solid fa-backward me-5"></i></span>
+                                <span>{currentPage} of {totalPages}</span>
+                                <span onClick={navigateToNextPage} className="cursor-pointer"><i className="fa-solid fa-forward ms-5"></i></span>
                             </div>
                         </>
                 }
